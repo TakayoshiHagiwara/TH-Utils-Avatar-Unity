@@ -1,0 +1,14 @@
+{
+  "name": "com.takayoshihagiwara.th-utils-avatar",
+  "version": "1.0.0",
+  "displayName": "TH-Utils-Avatar",
+  "description": "This is utilities for avatar",
+  "unity": "2021.3",
+  "unityRelease": "15f1",
+  "keywords": [
+    "avatar"
+  ],
+  "author": {
+    "name": "Takayoshi Hagiwara"
+  }
+}
