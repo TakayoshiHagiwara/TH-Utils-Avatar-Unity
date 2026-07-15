@@ -8,6 +8,9 @@
 
 - [Usage](#usage)
 - [Definition](#definition)
+- [Properties](#properties)
+  - [Bones](#bones)
+  - [\_bonesToExclude](#_bonestoexclude)
 - [Methods](#methods)
   - [RefreshBones()](#refreshbones)
 </details>
@@ -32,6 +35,14 @@ Namespace: TH.Utils.Avatar
 
 Humanoidアバターのボーン情報を保持します。
 このスクリプト単体では使用しません。
+
+# Properties
+<!-- -------------------------------------------------- -->
+## Bones
+Humanoidアバターのボーン情報リスト。
+
+## _bonesToExclude
+ほかのスクリプトの参照から除外するボーン。
 
 
 # Methods
