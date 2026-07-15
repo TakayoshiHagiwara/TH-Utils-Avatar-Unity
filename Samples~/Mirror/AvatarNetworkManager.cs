@@ -7,18 +7,21 @@
 
 using Mirror;
 
-public sealed class AvatarNetworkManager : NetworkManager
+namespace TH.Utils.Avatar
 {
-    public override void OnStartServer()
+    public sealed class AvatarNetworkManager : NetworkManager
     {
-        base.OnStartServer();
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
 
-        NetworkServer.RegisterHandler<AvatarMotionMessage>(OnReceiveMotionFromClient, requireAuthentication: false);
-    }
+            NetworkServer.RegisterHandler<AvatarMotionMessage>(OnReceiveMotionFromClient, requireAuthentication: false);
+        }
 
-    private static void OnReceiveMotionFromClient(NetworkConnectionToClient sender, AvatarMotionMessage message)
-    {
-        // Forward the motion received from the client to all clients
-        NetworkServer.SendToAll(message, Channels.Unreliable);
+        private static void OnReceiveMotionFromClient(NetworkConnectionToClient sender, AvatarMotionMessage message)
+        {
+            // Forward the motion received from the client to all clients
+            NetworkServer.SendToAll(message, Channels.Unreliable);
+        }
     }
 }

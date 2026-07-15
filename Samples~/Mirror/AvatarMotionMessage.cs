@@ -7,11 +7,14 @@
 using Mirror;
 using UnityEngine;
 
-public struct AvatarMotionMessage : NetworkMessage
+namespace TH.Utils.Avatar
 {
-    public int AvatarId;
-    public uint Sequence;
+    public struct AvatarMotionMessage : NetworkMessage
+    {
+        public int AvatarId;
+        public uint Sequence;
 
-    public Vector3[] LocalPositions;
-    public Quaternion[] LocalRotations;
+        public Vector3[] LocalPositions;
+        public Quaternion[] LocalRotations;
+    }
 }
