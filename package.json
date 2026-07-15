@@ -10,5 +10,17 @@
   ],
   "author": {
     "name": "Takayoshi Hagiwara"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "OVR Hand Tracking Sample",
+      "description": "This is a sample that retargets finger data captured by OVR hand tracking to the avatar's fingers.",
+      "path": "Samples~/OVRHandTracking"
+    },
+    {
+      "displayName": "Mirror Sample",
+      "description": "This is a sample that uses Mirror to synchronize avatar movements between PCs.",
+      "path": "Samples~/Mirror"
+    }
+  ]
 }
