@@ -23,7 +23,9 @@
 3. (まだの場合) `AvatarNetworkManager` を任意のGameObjectにアタッチする
     - Send Rateを `AvatarMotionSender` で入力した値にします
     - Player Prefabには `Network Identity` がアタッチされた任意のPrefabをアタッチします (適当なGameObejctで問題ありません)
-
+4. (まだの場合) `Kcp Transport` を任意のGameObjectにアタッチする
+5. (まだの場合、Optional) `Network Manager HUD` を任意のGameObjectにアタッチする
+    - GUIからIPアドレスとポートの指定や、接続の開始/停止を制御できます
 
 # Definition
 Namespace: TH.Utils.Avatar
