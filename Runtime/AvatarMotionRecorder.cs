@@ -63,7 +63,10 @@ namespace TH.Utils.Avatar
                 StartRecording();
 
             if (Input.GetKeyDown(_stopRecordingKey))
-                StopRecordingAndSave();
+            {
+                StopRecording();
+                SaveMotionData();
+            }    
         }
 
         private void FixedUpdate()
@@ -102,19 +105,27 @@ namespace TH.Utils.Avatar
             _isFirstRecordingFrame = true;
             _isRecording = true;
 
-            Debug.Log("Avatar motion recording started.", this);
+            Debug.Log("Avatar motion recording started.");
         }
 
         /// <summary>
-        /// Stops recording and writes the captured motion to a CSV file.
+        /// Stops recording.
         /// </summary>
-        public void StopRecordingAndSave()
+        public void StopRecording()
         {
             if (!_isRecording)
                 return;
 
             _isRecording = false;
 
+            Debug.Log("Avatar motion recording stopped.");
+        }
+
+        /// <summary>
+        /// Writes the captured motion to a CSV file.
+        /// </summary>
+        public void SaveMotionData()
+        {
             if (_motionData.FrameCount == 0)
             {
                 Debug.LogWarning("No motion frames were recorded.");
