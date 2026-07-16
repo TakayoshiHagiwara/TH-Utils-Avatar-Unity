@@ -29,6 +29,8 @@
 
 **必ず記録データと同じ `Time.fixedDeltaTime` で実行してください。また、記録データの構造は `AvatarMotionRecorder.cs` で記録したものを同じにしてください。**
 
+記録データと同じ`Time.fixedDeltaTime` にするには、Edit -> Project Settings -> TimeのFixed Timestepで同じ値を設定してください。
+
 また、実行時に記録データを一度自動で読み込んだ後にパスやファイル名を変更しても、反映されません。
 実行前に指定するか、コンテキストメニューの「Load Motion Data」を実行するか、LoadMotionData()をほかのスクリプトから呼び出してください。
 
@@ -51,6 +53,7 @@ Namespace: TH.Utils.Avatar
 以下の注意点をご確認ください。
 
 - 記録データと同じ `Time.fixedDeltaTime` で実行する
+- 記録データと同じ `AvatarBoneList.Bones` の個数にする
 - 記録データの構造は `AvatarMotionRecorder.cs` で記録したCSVと同じにする
 - 記録時と同じ階層構造のアバターを使用する
 
