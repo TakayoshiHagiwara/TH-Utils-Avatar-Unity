@@ -6,6 +6,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TH.Utils.Avatar
@@ -38,8 +40,12 @@ namespace TH.Utils.Avatar
 
         private AvatarMotionData _motionData;
         private bool _isRecording;
+        private bool _isSaving;
         private bool _isFirstRecordingFrame;
         private float _recordingStartTime;
+
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationToken _cancellationToken;
 
         /// <summary>
         /// Gets a value indicating whether motion recording is active.
@@ -65,7 +71,8 @@ namespace TH.Utils.Avatar
             if (Input.GetKeyDown(_stopRecordingKey))
             {
                 StopRecording();
-                SaveMotionData();
+                //SaveMotionData();
+                _ = SaveMotionDataAsync();
             }    
         }
 
@@ -97,7 +104,7 @@ namespace TH.Utils.Avatar
         /// </summary>
         public void StartRecording()
         {
-            if (_isRecording)
+            if (_isRecording || _isSaving)
                 return;
 
             _motionData.Clear();
@@ -118,6 +125,12 @@ namespace TH.Utils.Avatar
 
             _isRecording = false;
 
+            if (_motionData.FrameCount == 0)
+            {
+                Debug.LogWarning("No motion frames were recorded.");
+                return;
+            }
+
             Debug.Log("Avatar motion recording stopped.");
         }
 
@@ -126,11 +139,10 @@ namespace TH.Utils.Avatar
         /// </summary>
         public void SaveMotionData()
         {
-            if (_motionData.FrameCount == 0)
-            {
-                Debug.LogWarning("No motion frames were recorded.");
+            if (_isSaving)
                 return;
-            }
+
+            _isSaving = true;
 
             try
             {
@@ -140,6 +152,37 @@ namespace TH.Utils.Avatar
             catch (Exception exception)
             {
                 Debug.LogException(exception, this);
+            }
+            finally
+            { 
+                _isSaving = false;
+            }
+        }
+
+        /// <summary>
+        /// Writes the captured motion to a CSV file on a worker thread.
+        /// </summary>
+        public async ValueTask SaveMotionDataAsync()
+        {
+            if (_isSaving)
+                return;
+
+            _isSaving = true;
+            Debug.Log("Data saving has started...");
+
+            try
+            {
+                _cancellationToken = _cancellationTokenSource.Token;
+                string filePath = await CsvManager.WriteMotionDataAsync(_motionData, _dataPath, _fileName, _cancellationToken);
+                Debug.Log($"Avatar motion data was saved to: {filePath}");
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+            }
+            finally
+            {
+                _isSaving = false;
             }
         }
 
@@ -163,6 +206,12 @@ namespace TH.Utils.Avatar
                 _positionTracks[i] = _motionData.Positions[boneName];
                 _rotationTracks[i] = _motionData.Rotations[boneName];
             }
+        }
+
+        private void OnDestroy()
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
         }
     }
 }

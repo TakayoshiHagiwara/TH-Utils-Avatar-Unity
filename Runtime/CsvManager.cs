@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TH.Utils.Avatar
@@ -82,6 +84,23 @@ namespace TH.Utils.Avatar
             }
 
             return filePath;
+        }
+
+        /// <summary>
+        /// Writes avatar motion data to a CSV file on a worker thread.
+        /// </summary>
+        /// <param name="motionData">The avatar motion data to write.</param>
+        /// <param name="dataPath">The output directory path relative to <see cref="Application.dataPath"/>.</param>
+        /// <param name="fileName">The output file name, with or without the CSV extension.</param>
+        /// <param name="token">The token used to cancel the operation.</param>
+        /// <returns>The absolute path of the written CSV file.</returns>
+        public async static ValueTask<string> WriteMotionDataAsync(AvatarMotionData motionData, string dataPath, string fileName, CancellationToken token)
+        {
+            return await Task.Run(() =>
+            {
+                token.ThrowIfCancellationRequested();
+                return WriteMotionData(motionData, dataPath, fileName);
+            }, token);
         }
 
         /// <summary>
