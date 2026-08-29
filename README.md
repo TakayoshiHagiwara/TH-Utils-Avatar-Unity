@@ -122,6 +122,7 @@ Humanoidアバターのボーン情報を保持します。
 ### Methods
 | Name | Summary |
 | ---- | ---- |
+| [Clone()](/Docs~/doc_AvatarMotionData.md#clone) | モーションデータのDeep copyを返します。 |
 | [Clear()](/Docs~/doc_AvatarMotionData.md#clear) | Times、Positions、Rotationsのリストを初期化します。 |
 
 
@@ -147,6 +148,8 @@ Humanoidアバターのボーン情報を保持します。
 | [StartPlaying()](/Docs~/doc_AvatarMotionPlayer.md#startplaying) | 再生を開始します。 |
 | [StopPlaying()](/Docs~/doc_AvatarMotionPlayer.md#stopplaying) | 再生を停止します。 |
 | [LoadMotionData()](/Docs~/doc_AvatarMotionPlayer.md#loadmotiondata) | 動作データを読み込みます。 実行中にパスやファイル名を変更した場合は、このメソッドを呼び出してください。 |
+| [GetMotionDataCopy()](/Docs~/doc_AvatarMotionPlayer.md#getmotiondatacopy) | 読み込んだモーションデータのコピーを返します。 |
+| [SetMotionData()](/Docs~/doc_AvatarMotionPlayer.md#setmotiondataavatarmotiondata) | 再生するモーションデータを設定します。 |
 
 
 <!-- -------------------------------------------------- -->

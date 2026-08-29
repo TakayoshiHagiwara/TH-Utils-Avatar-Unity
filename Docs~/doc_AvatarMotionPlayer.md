@@ -21,6 +21,8 @@
   - [StartPlaying()](#startplaying)
   - [StopPlaying()](#stopplaying)
   - [LoadMotionData()](#loadmotiondata)
+  - [GetMotionDataCopy()](#getmotiondatacopy)
+  - [SetMotionData(AvatarMotionData)](#setmotiondataavatarmotiondata)
 </details>
 
 
@@ -121,4 +123,22 @@ public void StopPlaying()
 
 ```csharp
 public void LoadMotionData()
+```
+
+<!-- -------------------------------------------------- -->
+## GetMotionDataCopy()
+読み込んだモーションデータのコピーを返します。
+外部スクリプトでモーションデータを編集したいときに使用します。
+
+```csharp
+public AvatarMotionData GetMotionDataCopy()
+```
+
+<!-- -------------------------------------------------- -->
+## SetMotionData(AvatarMotionData)
+再生するモーションデータを設定します。
+外部スクリプトで編集したモーションデータを設定する際などに使用します。
+
+```csharp
+public void SetMotionData(AvatarMotionData motionData)
 ```
