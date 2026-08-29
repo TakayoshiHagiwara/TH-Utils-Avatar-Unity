@@ -36,6 +36,17 @@ namespace TH.Utils.Avatar
         public Dictionary<string, List<Quaternion>> Rotations { get; }
 
         /// <summary>
+        /// Initializes an empty avatar motion data container. 
+        /// </summary> 
+        /// <param name="initialCapacity">The initial frame capacity.</param>
+        private AvatarMotionData(int initialCapacity)
+        {
+            Times = new List<float>(initialCapacity);
+            Positions = new Dictionary<string, List<Vector3>>();
+            Rotations = new Dictionary<string, List<Quaternion>>();
+        }
+
+        /// <summary>
         /// Initializes a new avatar motion data container.
         /// </summary>
         /// <param name="bones">The bones included in the recording.</param>
@@ -61,6 +72,24 @@ namespace TH.Utils.Avatar
                 Positions.Add(bone.name, new List<Vector3>(initialCapacity));
                 Rotations.Add(bone.name, new List<Quaternion>(initialCapacity));
             }
+        }
+
+        /// <summary>
+        /// Creates a deep copy of this motion data.
+        /// </summary> 
+        /// <returns>A copied motion data instance.</returns>
+        public AvatarMotionData Clone()
+        {
+            AvatarMotionData copy = new(FrameCount);
+            copy.Times.AddRange(Times);
+            
+            foreach (KeyValuePair<string, List<Vector3>> entry in Positions)
+                copy.Positions.Add(entry.Key, new List<Vector3>(entry.Value));
+            
+            foreach (KeyValuePair<string, List<Quaternion>> entry in Rotations)
+                copy.Rotations.Add(entry.Key, new List<Quaternion>(entry.Value));
+            
+            return copy;
         }
 
         /// <summary>
