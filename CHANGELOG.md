@@ -10,3 +10,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Avatar motion recorder and player
 - Samples: OVRHandTracking, Mirror
+
+## [1.1.1] - 2025-8-29
+### Added
+- Add Clone method in AvatarMotionData class
+- Add property and GetMotionDataCopy and SetMotionData method in AvatarMotionPlayer
+- Add property in AvatarMotionRecorder

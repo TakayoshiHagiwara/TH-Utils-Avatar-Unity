@@ -14,6 +14,7 @@
   - [Rotations](#rotations)
 - [Constructor](#constructor)
 - [Methods](#methods)
+  - [Clone()](#clone)
   - [Clear()](#clear)
 </details>
 
@@ -42,6 +43,15 @@ Namespace: TH.Utils.Avatar
 # Constructor
 <!-- -------------------------------------------------- -->
 ```csharp
+private AvatarMotionData(int initialCapacity)
+```
+空のモーションデータを作成します。
+
+- initialCapacity: リストの初期容量。記録するフレームレートと時間に応じて適宜設定してください。記録中に超える場合は自動的にリストが再生成されます。
+
+
+<!-- -------------------------------------------------- -->
+```csharp
 public AvatarMotionData(IReadOnlyList<Transform> bones, int initialCapacity)
 ```
 - bones: 記録対象のボーンリスト
@@ -49,6 +59,15 @@ public AvatarMotionData(IReadOnlyList<Transform> bones, int initialCapacity)
 
 
 # Methods
+<!-- -------------------------------------------------- -->
+## Clone()
+モーションデータのDeep copyを返します。
+
+
+```csharp
+public AvatarMotionData Clone()
+```
+
 <!-- -------------------------------------------------- -->
 ## Clear()
 Times、Positions、Rotationsのリストを初期化します。
