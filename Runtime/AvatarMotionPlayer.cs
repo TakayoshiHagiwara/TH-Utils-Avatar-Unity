@@ -45,10 +45,20 @@ namespace TH.Utils.Avatar
         private float _playbackTime;
         private bool _isPlaying;
 
-        /// <summary>
-        /// Gets a value indicating whether motion playback is active.
-        /// </summary>
+        /// <summary>Gets a value indicating whether motion playback is active.</summary>
         public bool IsPlaying => _isPlaying;
+
+        /// <summary>Gets or sets whether motion playback loops.</summary>
+        public bool Loop { get => _loop; set => _loop = value; }
+
+        /// <summary>Gets or sets the playback speed multiplier.</summary>
+        public float PlaybackSpeed { get => _playbackSpeed; set => _playbackSpeed = Mathf.Max(0.0f, value); }
+
+        /// <summary>Gets or sets the motion data directory path.</summary>
+        public string DataPath { get => _dataPath; set => _dataPath = value; }
+
+        /// <summary>Gets or sets the motion data file name.</summary>
+        public string FileName { get => _fileName; set => _fileName = value; }
 
         /// <summary>
         /// Initializes the avatar bones and loads the motion data.
@@ -131,7 +141,7 @@ namespace TH.Utils.Avatar
             _isPlaying = true;
             _animator.enabled = false;
 
-            Debug.Log("Avatar motion playback started.", this);
+            Debug.Log("Avatar motion playback started.");
         }
 
         /// <summary>
@@ -145,7 +155,7 @@ namespace TH.Utils.Avatar
             _isPlaying = false;
             _animator.enabled = true;
 
-            Debug.Log("Avatar motion playback stopped.", this);
+            Debug.Log("Avatar motion playback stopped.");
         }
 
         /// <summary>
@@ -160,22 +170,55 @@ namespace TH.Utils.Avatar
             try
             {
                 _motionData = CsvManager.ReadMotionData(_bones, _dataPath, _fileName);
-                _positionTracks = new List<Vector3>[_bones.Count];
-                _rotationTracks = new List<Quaternion>[_bones.Count];
+                InitializeMotionTracks();
 
-                for (int i = 0; i < _bones.Count; i++)
-                {
-                    string boneName = _bones[i].name;
-                    _positionTracks[i] = _motionData.Positions[boneName];
-                    _rotationTracks[i] = _motionData.Rotations[boneName];
-                }
-
-                Debug.Log($"Avatar motion data was loaded. Frames: {_motionData.FrameCount}", this);
+                Debug.Log($"Avatar motion data was loaded. Frames: {_motionData.FrameCount}");
             }
             catch (Exception exception)
             {
                 _motionData = null;
-                Debug.LogException(exception, this);
+                Debug.LogException(exception);
+            }
+        }
+
+        /// <summary>
+        /// Returns a copy of the currently loaded motion data.
+        /// </summary>
+        /// <returns>A copy of the loaded motion data, or null if no data is loaded.</returns>
+        public AvatarMotionData GetMotionDataCopy()
+        {
+            return _motionData?.Clone();
+        }
+
+        /// <summary>
+        /// Sets the motion data used for playback.
+        /// </summary>
+        /// <param name="motionData">The motion data to use for playback.</param>
+        public void SetMotionData(AvatarMotionData motionData)
+        {
+            if (motionData == null)
+                throw new ArgumentNullException(nameof(motionData));
+
+            if (_isPlaying)
+                StopPlaying();
+
+            _motionData = motionData.Clone();
+            InitializeMotionTracks();
+        }
+
+        /// <summary>
+        /// Caches the motion tracks for each avatar bone.
+        /// </summary>
+        private void InitializeMotionTracks()
+        {
+            _positionTracks = new List<Vector3>[_bones.Count];
+            _rotationTracks = new List<Quaternion>[_bones.Count];
+
+            for (int i = 0; i < _bones.Count; i++)
+            {
+                string boneName = _bones[i].name;
+                _positionTracks[i] = _motionData.Positions[boneName];
+                _rotationTracks[i] = _motionData.Rotations[boneName];
             }
         }
     }
