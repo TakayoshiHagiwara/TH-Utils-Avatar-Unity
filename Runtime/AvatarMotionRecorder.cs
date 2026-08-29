@@ -53,6 +53,9 @@ namespace TH.Utils.Avatar
         /// <summary>Gets a value indicating whether motion data is being saved.</summary>
         public bool IsSaving => _isSaving;
 
+        /// <summary>Gets or sets the maximum recording seconds.</summary>
+        public int MaximumRecordingSeconds { get => _maximumRecordingSeconds; set => _maximumRecordingSeconds = value; }
+
         /// <summary>Gets or sets the output directory path.</summary>
         public string DataPath { get => _dataPath; set => _dataPath = value; }
 
