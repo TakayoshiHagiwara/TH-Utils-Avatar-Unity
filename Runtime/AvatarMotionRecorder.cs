@@ -47,10 +47,17 @@ namespace TH.Utils.Avatar
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private CancellationToken _cancellationToken;
 
-        /// <summary>
-        /// Gets a value indicating whether motion recording is active.
-        /// </summary>
+        /// <summary>Gets a value indicating whether motion recording is active.</summary>
         public bool IsRecording => _isRecording;
+
+        /// <summary>Gets a value indicating whether motion data is being saved.</summary>
+        public bool IsSaving => _isSaving;
+
+        /// <summary>Gets or sets the output directory path.</summary>
+        public string DataPath { get => _dataPath; set => _dataPath = value; }
+
+        /// <summary>Gets or sets the output file name.</summary>
+        public string FileName { get => _fileName; set => _fileName = value; }
 
         private void Awake()
         {
@@ -151,7 +158,7 @@ namespace TH.Utils.Avatar
             }
             catch (Exception exception)
             {
-                Debug.LogException(exception, this);
+                Debug.LogException(exception);
             }
             finally
             { 
@@ -178,7 +185,7 @@ namespace TH.Utils.Avatar
             }
             catch (Exception exception)
             {
-                Debug.LogException(exception, this);
+                Debug.LogException(exception);
             }
             finally
             {
